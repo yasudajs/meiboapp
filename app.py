@@ -98,6 +98,15 @@ def user_page():
     return render_template("user.html", user=current_user)
 
 
+# マイ連絡先表示
+@app.route("/my_contact")
+@login_required
+def my_contact():
+    # 自分の連絡先（is_deleted=0のみ）
+    contact = current_user.contacts[0] if current_user.contacts and current_user.contacts[0].is_deleted == 0 else None
+    return render_template("my_contact.html", user=current_user, contact=contact)
+
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="127.0.0.1", port=port, debug=True)
