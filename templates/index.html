@@ -3,18 +3,49 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello, Flask</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>ログイン | MeiboApp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
   </head>
   <body class="bg-light">
-    <div class="container py-5">
-      <h1 class="mb-3">Hello, Flask 👋</h1>
-      <p class="lead">最小構成のFlaskアプリが動作しています。</p>
-      <ul>
-        <li><a href="/">/</a> … このページ</li>
-        <li><a href="/health">/health</a> … ヘルスチェック（JSON）</li>
-      </ul>
+    <div class="container py-5" style="max-width: 400px;">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h2 class="mb-4 text-center">MeiboApp</h2>
+          <h5 class="text-center text-muted mb-4">ログイン</h5>
+          
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+          
+          <form method="post" action="{{ url_for('login') }}">
+            <div class="mb-3">
+              <label for="email" class="form-label">メールアドレス</label>
+              <input type="email" class="form-control" id="email" name="email" required autofocus>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">パスワード</label>
+              <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">ログイン</button>
+          </form>
+          
+          <div class="mt-4 text-center">
+            <small class="text-muted">
+              テストアカウント<br>
+              管理者: yamada.taro@example.com / admin1234<br>
+              一般: suzuki.ichiro@example.com / user1234
+            </small>
+          </div>
+        </div>
+      </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
   </body>
 </html>
